@@ -1,0 +1,10 @@
+IDProducto1;Producto1;413.31
+IDProducto2;Producto2;94.32
+IDProducto3;Producto3;540.52
+IDProducto4;Producto4;540.83
+IDProducto5;Producto5;869.53
+IDProducto6;Producto6;595.49
+IDProducto7;Producto7;13.41
+IDProducto8;Producto8;682.96
+IDProducto9;Producto9;721.92
+IDProducto10;Producto10;926.54
