@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class GenerateInfoFiles {
@@ -61,15 +64,33 @@ public class GenerateInfoFiles {
     public static void createSalesManInfoFile(int salesmanCount, String outputFolder) {
         String fileName = outputFolder + "salesmen_info.txt";
         try (FileWriter writer = new FileWriter(fileName)) {
-            for (int i = 1; i <= salesmanCount; i++) {
+            Random random = new Random();
+        	for (int i = 1; i <= salesmanCount; i++) {
                 String tipoDocumento = "CC";
-                long numeroDocumento = 100000000 + i;
-                String nombres = "NombresVendedor" + i;
-                String apellidos = "ApellidosVendedor" + i;
+                long numeroDocumento = random.nextLong() + i;
+                String nombres = GetNameOrLastname("RealNames.txt");
+                String apellidos = GetNameOrLastname("LastName.txt");
                 writer.write(tipoDocumento + ";" + numeroDocumento + ";" + nombres + ";" + apellidos + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static String GetNameOrLastname(String fileName) {
+    InputStream inputStream = GenerateInfoFiles.class.getResourceAsStream(fileName);
+    if (inputStream != null) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+               return line;	
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } else {
+        System.err.println("File not found: " + fileName);
+    }
+    return null;
     }
 }
