@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GenerateInfoFiles {
@@ -67,9 +69,9 @@ public class GenerateInfoFiles {
             Random random = new Random();
         	for (int i = 1; i <= salesmanCount; i++) {
                 String tipoDocumento = "CC";
-                long numeroDocumento = random.nextLong() + i;
-                String nombres = GetNameOrLastname("RealNames.txt");
-                String apellidos = GetNameOrLastname("LastName.txt");
+                long numeroDocumento = random.nextLong(100000000,199999999) + i;
+                String nombres = GetNameOrLastname("RealNames.txt",random);
+                String apellidos = GetNameOrLastname("LastName.txt",random);
                 writer.write(tipoDocumento + ";" + numeroDocumento + ";" + nombres + ";" + apellidos + "\n");
             }
         } catch (IOException e) {
@@ -77,14 +79,17 @@ public class GenerateInfoFiles {
         }
     }
     
-    public static String GetNameOrLastname(String fileName) {
+    public static String GetNameOrLastname(String fileName,Random random) {
     InputStream inputStream = GenerateInfoFiles.class.getResourceAsStream(fileName);
     if (inputStream != null) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
+            List<String> linelist = new ArrayList<String>();
             while ((line = reader.readLine()) != null) {
-               return line;	
+              linelist.add(line);	
             }
+            int index = (int)(Math.random() * linelist.size());
+            return linelist.get(index);
         } catch (IOException e) {
             e.printStackTrace();
         }
