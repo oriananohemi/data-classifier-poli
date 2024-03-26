@@ -1,0 +1,10 @@
+CC;101334110;Patricia;Rodríguez
+CC;147577421;Teresa;Rangel
+CC;139668055;Daniela;Castro
+CC;157897364;José Luis;García
+CC;199477509;Sergio;Peña
+CC;167462241;Francisco;Castro
+CC;192193570;Ana María;Ponce
+CC;131795830;Rosario;Castillo
+CC;171911052;Rosario;Vargas
+CC;161607693;Valeria;Ponce
