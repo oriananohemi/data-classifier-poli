@@ -23,16 +23,16 @@ public class GenerateInfoFiles {
             }
         }
 
-        createSalesMenFiles(10, outputFolder);
-
-        createProductsFile(20, outputFolder);
-
-        createSalesManInfoFile(10, outputFolder);
-
-        System.out.println("Archivos generados exitosamente en la carpeta '" + outputFolder + "'.");
+        if (createSalesMenFiles(10, outputFolder) 
+        && createProductsFile(20, outputFolder) 
+        && createSalesManInfoFile(10, outputFolder)) {
+            System.out.println("Archivos generados exitosamente en la carpeta '" + outputFolder + "'.");
+        } else {
+            System.err.println("Error al generar archivos.");
+        }
     }
 
-    public static void createSalesMenFiles(int salesmenCount, String outputFolder) {
+    public static boolean createSalesMenFiles(int salesmenCount, String outputFolder) {
         for (int i = 1; i <= salesmenCount; i++) {
             String fileName = outputFolder + "salesman_" + i + ".txt";
             try (FileWriter writer = new FileWriter(fileName)) {
@@ -44,11 +44,13 @@ public class GenerateInfoFiles {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
         }
+        return true;
     }
 
-    public static void createProductsFile(int productsCount, String outputFolder) {
+    public static boolean createProductsFile(int productsCount, String outputFolder) {
         String fileName = outputFolder + "products_info.txt";
         try (FileWriter writer = new FileWriter(fileName)) {
             Random random = new Random();
@@ -60,23 +62,27 @@ public class GenerateInfoFiles {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public static void createSalesManInfoFile(int salesmanCount, String outputFolder) {
+    public static boolean createSalesManInfoFile(int salesmanCount, String outputFolder) {
         String fileName = outputFolder + "salesmen_info.txt";
         try (FileWriter writer = new FileWriter(fileName)) {
             Random random = new Random();
         	for (int i = 1; i <= salesmanCount; i++) {
                 String tipoDocumento = "CC";
-                long numeroDocumento = random.nextLong(100000000,199999999) + i;
+                long numeroDocumento = Math.abs(random.nextLong()) % 1000000000L;
                 String nombres = GetNameOrLastname("RealNames.txt",random);
                 String apellidos = GetNameOrLastname("LastName.txt",random);
                 writer.write(tipoDocumento + ";" + numeroDocumento + ";" + nombres + ";" + apellidos + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     public static String GetNameOrLastname(String fileName,Random random) {
